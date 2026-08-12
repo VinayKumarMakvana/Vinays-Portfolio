@@ -1,179 +1,250 @@
 "use client";
 
-import { useState } from "react";
+import { useState } from "react"; // type FormEvent hata diya
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin, Code2, Briefcase, MessageSquare } from "lucide-react";
+import { MapPin, CheckCircle2, AlertCircle } from "lucide-react";
+// Button aur utils wale dono error wale imports hata diye hain
 
-export function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+interface FormState {
+  name: string;
+  business: string;
+  website: string;
+  email: string;
+  challenge: string;
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+const INITIAL_STATE: FormState = {
+  name: "",
+  business: "",
+  website: "",
+  email: "",
+  challenge: "",
+};
+
+type SubmitStatus = "idle" | "loading" | "success" | "error";
+
+export default function Contact() {
+  const [form, setForm] = useState<FormState>(INITIAL_STATE);
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }
+
+  // Simple Email Validator function yahin bana diya
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) { // yahan direct React.FormEvent use kiya
     e.preventDefault();
+    setErrorMessage(null);
+
+    if (!form.name.trim() || !form.business.trim() || !form.challenge.trim()) {
+      setStatus("error");
+      setErrorMessage("Please fill in your name, business name, and biggest challenge.");
+      return;
+    }
+    
+    if (!isValidEmail(form.email)) {
+      setStatus("error");
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
     setStatus("loading");
 
-    // Form data ko URL format me set kar rahe hain taaki mail app me sahi se dikhe
-    const subject = encodeURIComponent(formData.subject || "New Contact from Portfolio");
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "bbf19e0d-c21c-40af-b8d6-42f88259a2ee", // Web3Forms key
+          subject: `New Audit Request from ${form.name.trim()}`,
+          name: form.name.trim(),
+          email: form.email.trim(),
+          business: form.business.trim(),
+          website: form.website || "No website provided", // normalizeUrl hata diya, simple string use ki
+          challenge: form.challenge.trim(),
+        }),
+      });
 
-    // Ye direct user ka default email app open kar dega
-    window.location.href = `mailto:vkmakvana.dev@gmail.com?subject=${subject}&body=${body}`;
+      const data = await response.json();
 
-    // Form reset aur success message dikhana
-    setStatus("success");
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setStatus("idle"), 5000);
-  };
+      if (!response.ok || !data.success) {
+        throw new Error(data?.message ?? "Something went wrong. Please try again.");
+      }
+
+      setStatus("success");
+      setForm(INITIAL_STATE);
+      setTimeout(() => setStatus("idle"), 5000);
+      
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+    }
+  }
 
   return (
-    <section id="contact" className="py-24 relative z-10">
-      <div className="container mx-auto px-6">
+    <section id="contact" className="border-t border-surface-border">
+      <div className="section-shell grid gap-14 py-24 sm:py-32 lg:grid-cols-2 lg:gap-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 md:text-center"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-emerald-400">Touch</span>
+          <span className="eyebrow">Start a Project</span>
+          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink-primary sm:text-4xl">
+            Get a free audit of your current site.
           </h2>
-          <div className="w-20 h-1 bg-accent-primary mx-auto md:ml-auto md:mr-auto rounded-full mb-8"></div>
+          <p className="mt-5 max-w-md text-base leading-relaxed text-ink-secondary">
+            Tell us about your business and where your site is falling
+            short. You&apos;ll hear back directly from Vinay — not a sales
+            team — with a clear read on what&apos;s holding your bookings back.
+          </p>
+
+          <div className="mt-8 flex items-start gap-3 rounded-xl border border-surface-border bg-surface/50 p-4">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-teal-bright" strokeWidth={1.75} />
+            <p className="text-sm text-ink-secondary">
+              Based in Kota, Rajasthan, India — working with clinics, salons,
+              and home service brands in New York, London, Dubai, India & Entire World Wide.
+            </p>
+          </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <h3 className="text-2xl font-bold mb-6">Let's talk about everything!</h3>
-            <p className="text-foreground/70">
-              Feel free to get in touch with me. I am always open to discussing new projects, creative ideas or opportunities to be part of your visions.
-            </p>
-
-            <div className="space-y-4 mt-8">
-              <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-full glass flex items-center justify-center text-accent-primary group-hover:bg-accent-primary group-hover:text-background transition-colors">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-sm text-foreground/50 font-medium">Mail me at</div>
-                  <div className="font-bold">vkmakvana.dev@gmail.com</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-full glass flex items-center justify-center text-accent-secondary group-hover:bg-accent-secondary group-hover:text-background transition-colors">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-sm text-foreground/50 font-medium">Location</div>
-                  <div className="font-bold">Kota, Rajasthan, India</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-8">
-              <h4 className="text-lg font-bold mb-4">Follow Me</h4>
-              <div className="flex gap-4">
-                {[
-                  { icon: <Code2 className="w-5 h-5" />, href: "https://github.com/VinayKumarMakvana" },
-                  { icon: <Briefcase className="w-5 h-5" />, href: "https://www.linkedin.com/in/vinay-kumar-makvana-2371ba391/" },
-                  { icon: <MessageSquare className="w-5 h-5" />, href: "mailto:vkmakvana.dev@gmail.com" },
-                ].map((social, i) => (
-                  <a key={i} href={social.href} className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-foreground/10 hover:text-accent-primary transition-all hover:-translate-y-1">
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <form onSubmit={handleSubmit} className="glass p-6 sm:p-8 rounded-2xl border border-foreground/10 space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground/80">Your Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full bg-foreground/5 border border-foreground/10 rounded-lg px-4 py-3 outline-none focus:border-accent-primary transition-colors text-foreground"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground/80">Email Address</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full bg-foreground/5 border border-foreground/10 rounded-lg px-4 py-3 outline-none focus:border-accent-primary transition-colors text-foreground"
-                    placeholder="yourgamil@gmail.com"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground/80">Subject (Optional)</label>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="rounded-2xl border border-surface-border bg-surface/60 p-6 sm:p-8"
+        >
+          <form onSubmit={handleSubmit} noValidate className="space-y-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field label="Full Name" htmlFor="name">
                 <input
+                  id="name"
+                  name="name"
                   type="text"
-                  name="subject"
-                  value={formData.subject}
+                  value={form.name}
                   onChange={handleChange}
-                  className="w-full bg-foreground/5 border border-foreground/10 rounded-lg px-4 py-3 outline-none focus:border-accent-primary transition-colors text-foreground"
-                  placeholder="Job Opportunity"
+                  autoComplete="name"
+                  className="form-input w-full rounded-md border p-2"
+                  placeholder="Jordan Lee"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground/80">Message</label>
-                <textarea
-                  name="message"
-                  required
-                  rows={4}
-                  value={formData.message}
+              </Field>
+              <Field label="Business Name" htmlFor="business">
+                <input
+                  id="business"
+                  name="business"
+                  type="text"
+                  value={form.business}
                   onChange={handleChange}
-                  className="w-full bg-foreground/5 border border-foreground/10 rounded-lg px-4 py-3 outline-none focus:border-accent-primary transition-colors text-foreground resize-none"
-                  placeholder="Hello Vinay, I'd like to talk about..."
+                  autoComplete="organization"
+                  className="form-input w-full rounded-md border p-2"
+                  placeholder="Lee Family Dental"
                 />
-              </div>
+              </Field>
+            </div>
 
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field label="Website URL" htmlFor="website" required={false}>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  value={form.website}
+                  onChange={handleChange}
+                  autoComplete="url"
+                  className="form-input w-full rounded-md border p-2"
+                  placeholder="yourbusiness.com"
+                />
+              </Field>
+              <Field label="Email" htmlFor="email">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                  className="form-input w-full rounded-md border p-2"
+                  placeholder="jordan@leefamilydental.com"
+                />
+              </Field>
+            </div>
+
+            <Field label="Biggest digital challenge" htmlFor="challenge">
+              <textarea
+                id="challenge"
+                name="challenge"
+                value={form.challenge}
+                onChange={handleChange}
+                rows={4}
+                className="form-input w-full resize-none rounded-md border p-2"
+                placeholder="Our site looks outdated and we're not getting online bookings..."
+              />
+            </Field>
+
+            {/* Custom Button component ki jagah standard HTML button use kiya hai */}
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="w-full rounded-lg bg-teal-600 px-4 py-3 font-bold text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
+            >
+              {status === "loading" ? "Sending..." : "Request a Free Website Audit"}
+            </button>
+
+            <div aria-live="polite">
               {status === "success" && (
-                <div className="text-emerald-400 text-sm font-medium bg-emerald-400/10 p-3 rounded-lg">
-                  Redirecting to your email app...
-                </div>
+                <p className="flex items-center gap-2 text-sm text-teal-bright">
+                  <CheckCircle2 className="h-4 w-4" />
+                  Thanks — your audit request is in. Expect a reply within one
+                  business day.
+                </p>
               )}
-
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full bg-gradient-to-r from-accent-primary to-emerald-400 hover:opacity-90 text-background font-bold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
-              >
-                {status === "loading" ? "Opening Mail..." : "Send Message"} 
-                {!status && <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-              </button>
-            </form>
-          </motion.div>
-        </div>
+              {status === "error" && errorMessage && (
+                <p className="flex items-center gap-2 text-sm text-red-400">
+                  <AlertCircle className="h-4 w-4" />
+                  {errorMessage}
+                </p>
+              )}
+            </div>
+          </form>
+        </motion.div>
       </div>
     </section>
+  );
+}
+
+function Field({
+  label,
+  htmlFor,
+  required = true,
+  children,
+}: {
+  label: string;
+  htmlFor: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label htmlFor={htmlFor} className="mb-2 block text-sm font-medium text-ink-primary">
+        {label}
+        {required && <span className="ml-1 text-gold">*</span>}
+      </label>
+      {children}
+    </div>
   );
 }
