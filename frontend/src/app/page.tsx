@@ -5,7 +5,7 @@ import { AdvancedConcepts } from "@/components/AdvancedConcepts";
 import { Projects } from "@/components/Projects";
 import { Architecture } from "@/components/Architecture";
 import { Terminal } from "@/components/Terminal";
-import { Contact } from "@/components/Contact";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
