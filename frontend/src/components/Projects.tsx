@@ -36,6 +36,36 @@ const projects = [
     images: ["/interview-preview1.png", "/interview-preview3.png","/interview-preview2.png"],
   },
   {
+    title: "Vinay's Web Studio",
+    desc: "A professional web development studio that builds high-quality websites for businesses and individuals.",
+    tech: ["React", "Node.js", "Tailwind CSS", "Shadcn UI", "Framer Motion"],
+    features: ["Client-Centric Workflow", "Full-Stack Solutions"],
+    icon: <Code2 className="w-5 h-5 sm:w-6 sm:h-6" />,
+    live: "https://vinays-web-servises.vercel.app/",
+    color: "rgba(16, 185, 129, 0.5)", // emerald-500
+    images: ["/studio1.png", "/studio2.png","/studio3.png"],
+  },
+  {
+    title: "JEE-OS",
+    desc: "JEE OS is a 100% free educational platform dedicated to providing high-quality engineering resources and learning tools to students across India.",
+    tech: ["JavaScipt", "JS API", "CSS","JSON"],
+    features: ["Study & Resource Tools", "OS-Inspired Interface"],
+    icon: <Cpu className="w-5 h-5 sm:w-6 sm:h-6" />,
+    live: "https://jee-os-6565.vercel.app/",
+    color: "rgba(16, 185, 129, 0.5)", // emerald-500
+    images: ["/jee1.png", "/jee2.png","/jee3.png"],
+  },
+  {
+    title: "NEET-OS",
+    desc: "NEET OS is a 100% free educational platform dedicated to providing high-quality resources and learning tools to students across India.",
+    tech: ["JavaScipt", "JS API", "CSS","JSON"],
+    features: ["Study & Resource Tools", "OS-Inspired Interface"],
+    icon: <Cpu className="w-5 h-5 sm:w-6 sm:h-6" />,
+    live: "https://neet-gx6c.vercel.app/",
+    color: "rgba(16, 185, 129, 0.5)", // emerald-500
+    images: ["/neet1.png", "/neet2.png","/neet3.png"],
+  },
+  {
     title: "VINAY'S-Portfolio",
     desc: "A full-stack developer portfolio built with modern web technologies and concepts.",
     tech: ["React", "Node.js", "Tailwind CSS", "Framer Motion"],
