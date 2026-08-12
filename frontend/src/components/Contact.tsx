@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react"; // type FormEvent hata diya
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, CheckCircle2, AlertCircle } from "lucide-react";
-// Button aur utils wale dono error wale imports hata diye hain
 
 interface FormState {
   name: string;
@@ -35,12 +34,11 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  // Simple Email Validator function yahin bana diya
   const isValidEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) { // yahan direct React.FormEvent use kiya
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage(null);
 
@@ -59,6 +57,7 @@ export default function Contact() {
     setStatus("loading");
 
     try {
+      // YAHAN DIRECT API CALL HO RAHI HAI, KOI MAIL APP NAHI KHULEGA
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
@@ -66,12 +65,12 @@ export default function Contact() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: "bbf19e0d-c21c-40af-b8d6-42f88259a2ee", // Web3Forms key
+          access_key: "bbf19e0d-c21c-40af-b8d6-42f88259a2ee", // <--- Apni Web3Forms Access Key yahan daalo
           subject: `New Audit Request from ${form.name.trim()}`,
           name: form.name.trim(),
           email: form.email.trim(),
           business: form.business.trim(),
-          website: form.website || "No website provided", // normalizeUrl hata diya, simple string use ki
+          website: form.website || "No website provided",
           challenge: form.challenge.trim(),
         }),
       });
@@ -82,6 +81,7 @@ export default function Contact() {
         throw new Error(data?.message ?? "Something went wrong. Please try again.");
       }
 
+      // Success hone par ye chalega
       setStatus("success");
       setForm(INITIAL_STATE);
       setTimeout(() => setStatus("idle"), 5000);
@@ -196,7 +196,6 @@ export default function Contact() {
               />
             </Field>
 
-            {/* Custom Button component ki jagah standard HTML button use kiya hai */}
             <button
               type="submit"
               disabled={status === "loading"}
