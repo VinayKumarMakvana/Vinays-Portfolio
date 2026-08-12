@@ -2,41 +2,33 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin, Phone, Code2, Briefcase, MessageSquare } from "lucide-react";
-import axios from "axios";
+import { Send, Mail, MapPin, Code2, Briefcase, MessageSquare } from "lucide-react";
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
-    setErrorMsg("");
 
-    try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
-      const response = await axios.post(`${backendUrl}/api/contact`, formData);
-      if (response.data.success) {
-        setStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        setTimeout(() => setStatus("idle"), 5000);
-      }
-    } catch (err: unknown) {
-      setStatus("error");
-      if (axios.isAxiosError(err)) {
-        setErrorMsg(err.response?.data?.error || err.response?.data?.message || "Something went wrong. Please try again.");
-      } else if (err instanceof Error) {
-        setErrorMsg(err.message);
-      } else {
-        setErrorMsg("Something went wrong. Please try again.");
-      }
-    }
+    // Form data ko URL format me set kar rahe hain taaki mail app me sahi se dikhe
+    const subject = encodeURIComponent(formData.subject || "New Contact from Portfolio");
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+
+    // Ye direct user ka default email app open kar dega
+    window.location.href = `mailto:vkmakvana.dev@gmail.com?subject=${subject}&body=${body}`;
+
+    // Form reset aur success message dikhana
+    setStatus("success");
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setTimeout(() => setStatus("idle"), 5000);
   };
 
   return (
@@ -84,7 +76,7 @@ export function Contact() {
                 </div>
                 <div>
                   <div className="text-sm text-foreground/50 font-medium">Location</div>
-                  <div className="font-bold">Kota, Rajastha, India</div>
+                  <div className="font-bold">Kota, Rajasthan, India</div>
                 </div>
               </div>
             </div>
@@ -164,15 +156,18 @@ export function Contact() {
                 />
               </div>
 
-              {status === "error" && <div className="text-red-400 text-sm font-medium bg-red-400/10 p-3 rounded-lg">{errorMsg}</div>}
-              {status === "success" && <div className="text-emerald-400 text-sm font-medium bg-emerald-400/10 p-3 rounded-lg">Message sent successfully! I'll get back to you soon.</div>}
+              {status === "success" && (
+                <div className="text-emerald-400 text-sm font-medium bg-emerald-400/10 p-3 rounded-lg">
+                  Redirecting to your email app...
+                </div>
+              )}
 
               <button
                 type="submit"
                 disabled={status === "loading"}
                 className="w-full bg-gradient-to-r from-accent-primary to-emerald-400 hover:opacity-90 text-background font-bold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
               >
-                {status === "loading" ? "Sending..." : "Send Message"} 
+                {status === "loading" ? "Opening Mail..." : "Send Message"} 
                 {!status && <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               </button>
             </form>
