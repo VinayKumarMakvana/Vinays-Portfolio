@@ -7,8 +7,8 @@ import { Layout, Server, Database, Brain } from "lucide-react";
 const skillsData = [
   {
     category: "Frontend Mastery",
-    icon: <Layout className="w-6 h-6 text-emerald-400" />,
-    gradient: "from-emerald-400/20 to-transparent",
+    icon: <Layout className="w-6 h-6 text-accent-primary" />,
+    gradient: "from-accent-primary/20 to-transparent",
     skills: [
       { name: "React" },
       { name: "Next.js" },
@@ -22,8 +22,8 @@ const skillsData = [
   },
   {
     category: "Backend Architecture",
-    icon: <Server className="w-6 h-6 text-blue-400" />,
-    gradient: "from-blue-400/20 to-transparent",
+    icon: <Server className="w-6 h-6 text-accent-tertiary" />,
+    gradient: "from-accent-tertiary/20 to-transparent",
     skills: [
       { name: "Node.js" },
       { name: "Express.js" },
@@ -35,8 +35,8 @@ const skillsData = [
   },
   {
     category: "Databases & DevOps",
-    icon: <Database className="w-6 h-6 text-purple-400" />,
-    gradient: "from-purple-400/20 to-transparent",
+    icon: <Database className="w-6 h-6 text-accent-secondary" />,
+    gradient: "from-accent-secondary/20 to-transparent",
     skills: [
       { name: "MongoDB" },
       { name: "MySQL" },
@@ -76,15 +76,15 @@ export function Skills() {
           transition={{ duration: 0.6 }}
           className="mb-16 flex flex-col items-center text-center"
         >
-          <div className="inline-block mb-3">
-            <span className="glass px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-accent-secondary border border-accent-secondary/20">
+          <div className="inline-block mb-4">
+            <span className="glass-panel px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest text-accent-secondary border border-accent-secondary/30">
               Technical Expertise
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-secondary to-emerald-400">Competencies</span>
+          <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter">
+            Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-secondary to-accent-tertiary text-glow">Competencies</span>
           </h2>
-          <p className="text-foreground/60 max-w-2xl text-base">
+          <p className="text-foreground/60 max-w-2xl text-lg font-medium">
             The foundational technologies and tools I use to build robust and scalable digital experiences.
           </p>
         </motion.div>
@@ -97,18 +97,18 @@ export function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: catIdx * 0.15 }}
-              className="relative w-full rounded-2xl glass border border-foreground/10 p-8 flex flex-col overflow-hidden group hover:border-foreground/20 transition-all duration-300"
+              className="relative w-full rounded-3xl glass-panel border border-white/5 p-8 flex flex-col overflow-hidden group hover:border-white/20 hover:shadow-2xl transition-all duration-300 bg-black/20"
             >
               {/* Subtle Gradient Background */}
               <div 
-                className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none`}
+                className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl pointer-events-none`}
               />
               
               <div className="relative z-10 flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-xl bg-foreground/5 border border-foreground/10 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300">
                   {category.icon}
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-foreground group-hover:to-foreground/70 transition-all">
+                <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/70 transition-all">
                   {category.category}
                 </h3>
               </div>
@@ -121,7 +121,7 @@ export function Skills() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.2 + (i * 0.05) }}
-                    className="px-3 py-1.5 rounded-lg bg-foreground/5 border border-foreground/5 hover:bg-foreground/10 hover:border-foreground/20 cursor-default transition-all text-xs sm:text-sm font-medium text-foreground/80 hover:text-foreground"
+                    className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 cursor-default transition-all text-sm font-medium text-white/80 hover:text-white"
                   >
                     {skill.name}
                   </motion.div>

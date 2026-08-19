@@ -27,97 +27,103 @@ export function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 w-full z-40 transition-all duration-300 ${
-        isScrolled ? "py-4 glass shadow-lg" : "py-6 bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="text-2xl font-bold tracking-tighter flex items-center gap-2 group">
-          <Terminal className="text-accent-primary group-hover:text-accent-secondary transition-colors" />
-          <span>V.K.M</span>
-        </a>
+    <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      <header
+        className={`pointer-events-auto transition-all duration-500 rounded-full border ${
+          isScrolled 
+            ? "glass-panel shadow-2xl shadow-black/20 border-white/10 py-3 px-6 w-full max-w-4xl bg-background/60" 
+            : "bg-background/20 backdrop-blur-sm border-transparent py-4 px-8 w-full max-w-5xl"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <a href="#" className="text-xl md:text-2xl font-bold tracking-tighter flex items-center gap-2 group">
+            <Terminal className="text-accent-primary group-hover:text-accent-tertiary transition-colors w-5 h-5 md:w-6 md:h-6" />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 group-hover:from-accent-primary group-hover:to-accent-tertiary transition-all duration-300">V.K.M</span>
+          </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          <ul className="flex items-center gap-6 text-sm font-medium">
-            {navLinks.map((link) => (
-              <li key={link.name}>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+            <ul className="flex items-center gap-6 text-sm font-medium">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-foreground/80 hover:text-accent-primary transition-colors relative group py-2"
+                  >
+                    {link.name}
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-accent-primary transition-all group-hover:w-full rounded-full" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex items-center gap-4 border-l border-foreground/20 pl-4">
+              <button
+                onClick={toggleRecruiterMode}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                  isRecruiterMode
+                    ? "bg-accent-secondary text-white shadow-[0_0_20px_rgba(176,38,255,0.4)] scale-105"
+                    : "glass hover:bg-foreground/10 hover:text-accent-primary border border-foreground/10"
+                }`}
+              >
+                <Briefcase className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">Quick-Pass</span>
+              </button>
+              <ThemeToggle />
+            </div>
+          </nav>
+
+          {/* Mobile Toggle */}
+          <div className="md:hidden flex items-center gap-4">
+            <ThemeToggle />
+            <button
+              className="text-foreground focus:outline-none p-2 glass rounded-full"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 16, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 glass-panel shadow-2xl rounded-2xl flex flex-col py-4 px-6 gap-2 md:hidden border border-white/10 mx-auto"
+            >
+              {navLinks.map((link) => (
                 <a
+                  key={link.name}
                   href={link.href}
-                  className="hover:text-accent-primary transition-colors relative group py-2"
+                  className="text-base font-medium text-foreground/80 hover:text-accent-primary p-3 rounded-xl hover:bg-foreground/5 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-accent-primary transition-all group-hover:w-full" />
                 </a>
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex items-center gap-4 border-l border-foreground/20 pl-4">
-            <button
-              onClick={toggleRecruiterMode}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                isRecruiterMode
-                  ? "bg-accent-secondary text-background shadow-[0_0_15px_rgba(236,72,153,0.5)]"
-                  : "glass hover:bg-foreground/10"
-              }`}
-            >
-              <Briefcase className="w-4 h-4" />
-              <span className="hidden lg:inline">Quick-Pass Mode</span>
-            </button>
-            <ThemeToggle />
-          </div>
-        </nav>
-
-        {/* Mobile Toggle */}
-        <div className="md:hidden flex items-center gap-4">
-          <ThemeToggle />
-          <button
-            className="text-foreground focus:outline-none"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full glass flex flex-col py-4 px-6 gap-4 md:hidden"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-lg font-medium hover:text-accent-primary"
-                onClick={() => setMobileMenuOpen(false)}
+              ))}
+              <div className="h-px w-full bg-foreground/10 my-2" />
+              <button
+                onClick={() => {
+                  toggleRecruiterMode();
+                  setMobileMenuOpen(false);
+                }}
+                className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold uppercase tracking-wider text-sm transition-all ${
+                  isRecruiterMode
+                    ? "bg-accent-secondary text-white shadow-[0_0_20px_rgba(176,38,255,0.4)]"
+                    : "glass border border-foreground/10 hover:bg-foreground/5 text-foreground/80"
+                }`}
               >
-                {link.name}
-              </a>
-            ))}
-            <button
-              onClick={() => {
-                toggleRecruiterMode();
-                setMobileMenuOpen(false);
-              }}
-              className={`flex items-center justify-center gap-2 w-full py-3 rounded-lg font-medium transition-all ${
-                isRecruiterMode
-                  ? "bg-accent-secondary text-background"
-                  : "glass"
-              }`}
-            >
-              <Briefcase className="w-5 h-5" />
-              Recruiter Quick-Pass Mode
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+                <Briefcase className="w-4 h-4" />
+                Recruiter Quick-Pass
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </div>
   );
 }

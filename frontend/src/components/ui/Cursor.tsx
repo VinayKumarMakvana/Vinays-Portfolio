@@ -96,11 +96,11 @@ export function Cursor() {
           ctx.lineTo(p2.x, p2.y);
           
           const life = 1 - (p1.age / maxAge);
-          ctx.strokeStyle = `rgba(0, 242, 254, ${life})`; // Shining Cyan/Neon
+          ctx.strokeStyle = `rgba(0, 255, 178, ${life})`; // Shining Cyan/Neon
           ctx.lineWidth = 8 * life;
           
           ctx.shadowBlur = 20 * life;
-          ctx.shadowColor = `rgba(0, 242, 254, ${life})`;
+          ctx.shadowColor = `rgba(0, 255, 178, ${life})`;
           
           ctx.stroke();
         }
@@ -127,12 +127,12 @@ export function Cursor() {
         className="fixed inset-0 pointer-events-none z-50 hidden md:block"
       />
       <motion.div
-        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#00F2FE] pointer-events-none z-50 hidden md:flex items-center justify-center shadow-[0_0_20px_#00F2FE]"
+        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#00FFB2] pointer-events-none z-50 hidden md:flex items-center justify-center shadow-[0_0_20px_#00FFB2]"
         animate={{
           x: position.x - 6,
           y: position.y - 6,
           scale: isHovering ? 2.5 : 1,
-          backgroundColor: isHovering ? "#fff" : "#00F2FE",
+          backgroundColor: isHovering ? "#fff" : "#00FFB2",
         }}
         transition={{ 
           type: "spring", 
