@@ -23,7 +23,7 @@ const dancingScript = Dancing_Script({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://github.com/VinayKumarMakvana"),
-  title: "Vinay Kumar Makvana | Full Stack Developer & AI Enthusiast",
+  title: "Vinay Kumar Makvana | Full Stack Developer with AI & Software Engineer",
   description: "Portfolio of Vinay Kumar Makvana, a Full-Stack Developer specializing in modern, scalable web applications, React, Next.js, and AI integrations.",
   keywords: [
     "Vinay Kumar Makvana", 
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://github.com/VinayKumarMakvana",
-    title: "Vinay Kumar Makvana | Full Stack Developer",
+    title: "Vinay Kumar Makvana | Full Stack Developer with AI & Software Engineer",
     description: "Explore the portfolio of Vinay Kumar Makvana, a Full-Stack Developer building modern, scalable web apps and AI-powered products.",
     siteName: "Vinay Kumar Makvana Portfolio",
     images: [
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vinay Kumar Makvana | Full Stack Developer",
+    title: "Vinay Kumar Makvana | Full Stack Developer with AI & Software Engineer",
     description: "Explore the portfolio of Vinay Kumar Makvana, a Full-Stack Developer building modern, scalable web apps and AI-powered products.",
     images: ["/brain.jpg"],
   },
