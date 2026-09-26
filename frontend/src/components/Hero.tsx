@@ -160,14 +160,14 @@ export function Hero() {
               <motion.a 
                 whileHover={{ scale: 1.15 }}
                 whileTap={{ scale: 0.9 }}
-                href="https://twitter.com" target="_blank" rel="noreferrer" className="text-white/70 hover:text-white transition-colors"
+                href="https://x.com/Vinayta30557451" target="_blank" rel="noreferrer" className="text-white/70 hover:text-white transition-colors"
               >
                 <FaXTwitter className="w-5 h-5" />
               </motion.a>
               <motion.a 
                 whileHover={{ scale: 1.15 }}
                 whileTap={{ scale: 0.9 }}
-                href="https://instagram.com" target="_blank" rel="noreferrer" className="text-white/70 hover:text-white transition-colors"
+                href="https://www.instagram.com/vi.naytailor" target="_blank" rel="noreferrer" className="text-white/70 hover:text-white transition-colors"
               >
                 <FaInstagram className="w-5 h-5" />
               </motion.a>
