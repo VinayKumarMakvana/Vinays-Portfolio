@@ -59,7 +59,7 @@ export function FullStackSection() {
             </motion.div>
 
             {/* 5 Vertical Cards Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-3">
               {techCards.map((card, index) => (
                 <motion.div
                   key={index}

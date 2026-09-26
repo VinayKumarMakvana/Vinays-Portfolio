@@ -31,7 +31,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex items-center gap-6 text-xs font-medium text-white/50">
+          <div className="flex flex-wrap justify-center md:flex-nowrap items-center gap-4 md:gap-6 text-xs font-medium text-white/50">
             <a href="#home" className="hover:text-white transition-colors">Home</a>
             <a href="#about" className="hover:text-white transition-colors">About</a>
             <a href="#projects" className="hover:text-white transition-colors">Projects</a>

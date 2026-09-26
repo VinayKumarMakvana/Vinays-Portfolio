@@ -120,7 +120,7 @@ export function GithubSection() {
             </div>
 
             {/* Stats below calendar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mt-6 pt-6 border-t border-white/5">
+            <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-6 sm:gap-4 mt-6 pt-6 border-t border-white/5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
                   <Shield className="w-4 h-4 text-emerald-400" />

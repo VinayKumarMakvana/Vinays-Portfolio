@@ -48,9 +48,16 @@ export function HowIBuildSection() {
               
               {/* Arrow */}
               {index < flowSteps.length - 1 && (
-                <div className="hidden xl:block text-white/20 shrink-0">
-                  <ArrowRight className="w-3 h-3" />
-                </div>
+                <>
+                  {/* Desktop Right Arrow */}
+                  <div className="hidden xl:block text-white/20 shrink-0">
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                  {/* Mobile Down Arrow */}
+                  <div className="block xl:hidden text-white/20 shrink-0 my-2">
+                    <svg className="w-4 h-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                  </div>
+                </>
               )}
             </div>
           ))}

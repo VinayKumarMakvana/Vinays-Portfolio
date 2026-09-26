@@ -36,7 +36,7 @@ export function SystemDesignSection() {
           animate={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="flex gap-3 shrink-0"
+          className="flex flex-col sm:flex-row gap-3 shrink-0"
         >
           <div className="flex flex-col gap-3 p-4 bg-[#0A0F1C] border border-white/10 rounded-2xl">
             <div className="flex items-center gap-3">

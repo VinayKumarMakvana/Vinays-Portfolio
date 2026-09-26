@@ -68,19 +68,19 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#030610]" id="home">
       
-      {/* Restored Original Hero Background Image - No darkening, no opacity reduction */}
+      {/* Restored Original Hero Background Image - Made Responsive */}
       <div 
-        className="absolute inset-0 z-0"
+        className="absolute top-0 left-0 right-0 h-[100vh] lg:h-auto lg:inset-0 z-0 bg-cover bg-[center_top] md:bg-[center_15%] lg:bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/hero-portrait-new.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
         }}
       />
 
-      {/* Subtle bottom gradient to blend into next section, but no heavy overlays over the face */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#030610] z-0 pointer-events-none" />
+      {/* Mobile-only soft gradient to ensure text remains readable when stacked over the image */}
+      <div className="absolute top-0 left-0 right-0 h-[100vh] bg-gradient-to-b from-[#030610]/60 via-transparent to-[#030610] z-0 pointer-events-none lg:hidden block" />
+
+      {/* Subtle bottom gradient to blend into next section */}
+      <div className="absolute top-0 left-0 right-0 h-[100vh] lg:h-auto lg:inset-0 bg-gradient-to-b from-transparent via-[#030610]/50 to-[#030610] z-0 pointer-events-none" />
 
       {/* Main Grid Layout */}
       <div className="relative z-10 flex-grow flex flex-col">
@@ -209,7 +209,7 @@ export function Hero() {
           </motion.div>
 
           {/* ===== CENTER COLUMN: Empty Spacer (4 cols) ===== */}
-          <div className="col-span-12 lg:col-span-4 relative min-h-[150px] lg:min-h-[90vh] flex justify-center items-center pointer-events-none">
+          <div className="col-span-12 lg:col-span-4 relative hidden lg:flex min-h-[90vh] justify-center items-center pointer-events-none">
             {/* Handwritten overlay text */}
             <div className={`absolute top-[10%] lg:top-[28%] left-[0%] lg:left-[5%] z-30 -rotate-12 ${caveat.className} hidden md:block`}>
               <div className="text-2xl text-white/60 leading-none drop-shadow-md">Better<br />Ideas<br />Brighter<br />Future</div>
@@ -221,7 +221,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="col-span-12 lg:col-span-3 flex flex-col gap-4 py-10 lg:py-0 z-20"
+            className="col-span-12 lg:col-span-3 flex flex-col gap-4 pt-4 pb-12 lg:py-0 z-20"
           >
             {/* Terminal */}
             <Terminal />

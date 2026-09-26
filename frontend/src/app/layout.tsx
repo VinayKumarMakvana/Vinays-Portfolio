@@ -3,7 +3,6 @@ import { Inter, Outfit, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 import { RecruiterModeProvider } from "@/components/RecruiterModeContext";
-import { Cursor } from "@/components/ui/Cursor";
 import { Background } from "@/components/ui/Background";
 import { Navbar } from "@/components/Navbar";
 
@@ -23,6 +22,7 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://github.com/VinayKumarMakvana"),
   title: "Vinay Kumar Makvana | Full Stack Developer & AI Enthusiast",
   description: "Portfolio of Vinay Kumar Makvana, a Full-Stack Developer specializing in modern, scalable web applications, React, Next.js, and AI integrations.",
   keywords: [
@@ -84,7 +84,6 @@ export default function RootLayout({
       >
           <RecruiterModeProvider>
             <Background />
-            <Cursor />
             <Navbar />
             <main>{children}</main>
           </RecruiterModeProvider>

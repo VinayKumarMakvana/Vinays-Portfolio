@@ -95,73 +95,51 @@ export function Contact() {
           animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex-1 w-full max-w-lg"
+          className="flex-1 w-full max-w-2xl"
         >
           <form 
             onSubmit={(e) => e.preventDefault()}
-            className="bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 p-5 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] backdrop-blur-md relative"
+            className="bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 p-6 md:p-8 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] backdrop-blur-md relative"
           >
             {/* Form Inner Glow */}
             <div className="absolute inset-0 bg-blue-500/5 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="grid grid-cols-2 gap-4 mb-3 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-5 relative z-10">
               <div>
-                <label className="block text-[9px] font-bold uppercase tracking-widest text-blue-300/70 mb-1.5">Name</label>
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-blue-300/70 mb-2">Name</label>
                 <input 
                   type="text" 
                   placeholder="Your name" 
-                  className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 focus:bg-blue-500/10 focus:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 focus:bg-blue-500/10 focus:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all"
                 />
               </div>
               <div>
-                <label className="block text-[9px] font-bold uppercase tracking-widest text-blue-300/70 mb-1.5">Email</label>
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-blue-300/70 mb-2">Email</label>
                 <input 
                   type="email" 
                   placeholder="you@example.com" 
-                  className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 focus:bg-blue-500/10 focus:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 focus:bg-blue-500/10 focus:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all"
                 />
               </div>
             </div>
-            <div className="mb-4 relative z-10">
-              <label className="block text-[9px] font-bold uppercase tracking-widest text-blue-300/70 mb-1.5">Message</label>
+            <div className="mb-6 relative z-10">
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-blue-300/70 mb-2">Message</label>
               <textarea 
-                placeholder="Your message..." 
-                rows={4}
-                className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 focus:bg-blue-500/10 focus:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all resize-none"
+                placeholder="How can I help you?..." 
+                rows={5}
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-3.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 focus:bg-blue-500/10 focus:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all resize-none"
               />
             </div>
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
               type="submit"
-              className="relative z-10 w-full md:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:from-blue-500 hover:to-indigo-500 transition-all group/btn shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)]"
+              className="relative z-10 w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:from-blue-500 hover:to-indigo-500 transition-all group/btn shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)]"
             >
               Send Message <Send className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
             </motion.button>
           </form>
-        </motion.div>
-
-        {/* Column 3: Globe */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="flex-1 hidden xl:flex relative h-[300px] items-center justify-center shrink-0"
-        >
-          {/* Globe Graphic */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-20 group-hover:opacity-40 transition-opacity duration-1000 rotate-12 group-hover:rotate-0">
-            <Globe className="w-72 h-72 text-blue-400" strokeWidth={1} />
-          </div>
-          
-          {/* Text Overlay */}
-          <div className="relative z-10 flex flex-col items-center gap-1">
-            <span className="text-xl font-bold text-white tracking-[0.2em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Build</span>
-            <span className="text-xl font-bold text-white tracking-[0.2em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Solve</span>
-            <span className="text-xl font-bold text-white tracking-[0.2em] uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Learn</span>
-            <span className="text-xl font-bold text-white tracking-[0.2em] uppercase text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.8)]">Repeat</span>
-          </div>
         </motion.div>
 
       </div>
