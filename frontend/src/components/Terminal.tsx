@@ -80,7 +80,7 @@ export function Terminal() {
       <div className="container mx-auto px-6 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-[#0B0B0F]/90 backdrop-blur-md"
         >

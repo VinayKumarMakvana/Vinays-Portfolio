@@ -29,23 +29,21 @@ export function Background() {
 
     const initParticles = () => {
       particles = [];
-      const numParticles = Math.min(window.innerWidth / 10, 100);
+      const numParticles = Math.min(window.innerWidth / 8, 120);
       for (let i = 0; i < numParticles; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 2 + 0.5,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          alpha: Math.random() * 0.5 + 0.1,
+          radius: Math.random() * 1.5 + 0.5,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          alpha: Math.random() * 0.6 + 0.2,
         });
       }
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const isDark = document.documentElement.classList.contains("dark");
-      const baseColor = isDark ? "255, 255, 255" : "0, 0, 0";
 
       particles.forEach((p, index) => {
         p.x += p.vx;
@@ -56,7 +54,7 @@ export function Background() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${baseColor}, ${p.alpha})`;
+        ctx.fillStyle = `rgba(59, 130, 246, ${p.alpha})`; // Blue glowing dots
         ctx.fill();
 
         for (let j = index + 1; j < particles.length; j++) {
@@ -65,12 +63,12 @@ export function Background() {
           const dy = p.y - p2.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 100) {
+          if (distance < 120) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(${baseColor}, ${0.1 - distance / 1000})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = `rgba(147, 51, 234, ${0.15 - distance / 1000})`; // Purple connecting lines
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }

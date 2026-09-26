@@ -22,7 +22,7 @@ export function Architecture() {
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-16 md:text-center"
         >

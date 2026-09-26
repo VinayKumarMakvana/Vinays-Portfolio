@@ -26,7 +26,7 @@ export function AdvancedConcepts() {
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="mb-16 md:text-center"
@@ -42,7 +42,7 @@ export function AdvancedConcepts() {
             <motion.div
               key={concept.title}
               initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               whileHover={{ scale: 1.05, rotateY: 5, rotateX: -5 }}
