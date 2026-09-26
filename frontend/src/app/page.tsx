@@ -4,7 +4,6 @@ import { HowIBuildSection } from "@/components/HowIBuildSection";
 import { FullStackSection } from "@/components/FullStackSection";
 import { SoftwareEngineeringSection } from "@/components/SoftwareEngineeringSection";
 import { Projects } from "@/components/Projects";
-import { AiEngineeringSection } from "@/components/AiEngineeringSection";
 import { DsaSection } from "@/components/DsaSection";
 import { SystemDesignSection } from "@/components/SystemDesignSection";
 import { Contact } from "@/components/Contact";
