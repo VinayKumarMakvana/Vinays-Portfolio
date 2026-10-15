@@ -12,8 +12,6 @@ const navLinks = [
   { name: "Stack", href: "#stack" },
   { name: "Projects", href: "#projects" },
   { name: "DSA", href: "#dsa" },
-  { name: "AI", href: "#ai" },
-  { name: "Blog", href: "#blog" },
 ];
 
 export function Navbar() {
